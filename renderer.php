@@ -28,7 +28,12 @@
      */
 
 
+
+
+
 class mod_speedreading_renderer extends plugin_renderer_base {
+
+
 
 
     /**
@@ -48,12 +53,17 @@ class mod_speedreading_renderer extends plugin_renderer_base {
                       <li>The whole activity should take less than 15 minutes.</li>
                       <li>You should aim to read the article in about 3 minutes and complete the questions in about 12 minutes.</li>
                   </ul>";
-        $html .= <<<EOD
-            <div class='greyButton' onclick='history.back()'> 
-                <p class ='buttonText'>Cancel</p>   </div>
-            <div class='greenButton' onclick='expandOverlay(<?php echo $title; ?>, <?php echo $article; ?>)'> 
-                <p class ='buttonText'>Start</p>    </div>
+        $html .= "<div class='greyButton' onclick='history.back()'> <p class ='buttonText'>Cancel</p>   </div>";
+        $html .= 
+            <<<EOD
+            <div class='greenButton' onclick="expandOverlay('
 EOD;
+        $html .= $title;
+        $html .= 
+            <<<EOD
+            ')"> <p class ='buttonText'>Start</p>    </div>
+EOD;
+
         return $html;
     }
 

@@ -31,6 +31,10 @@
 
     require_once(dirname(dirname(dirname(__FILE__))).'/config.php');
     require_once(dirname(__FILE__).'/lib.php');
+    // suggested to use the following on stackoverflow as part of using an 
+    // external javascript file:
+    // http://stackoverflow.com/questions/5915258/how-to-load-external-js-file-into-moodle
+    require_once($CFG->libdir . '/pagelib.php');
 
     $id = optional_param('id', 0, PARAM_INT); // course_module ID, or
     $n  = optional_param('n', 0, PARAM_INT);  // speedreading instance ID - it should be named as the first character of the module
@@ -51,6 +55,7 @@
         $sr_article = $DB->get_record('sr_article', array('sr_id' => $cm->instance), '*', MUST_EXIST);
     } elseif ($n) {
         $speedreading  = $DB->get_record('speedreading', array('id' => $n), '*', MUST_EXIST);
+        $sr_article = $DB->get_record('sr_article', array('sr_id' => $n), '*', MUST_EXIST);
         $course     = $DB->get_record('course', array('id' => $speedreading->course), '*', MUST_EXIST);
         $cm         = get_coursemodule_from_instance('speedreading', $speedreading->id, $course->id, false, MUST_EXIST);
     } else {
@@ -69,28 +74,13 @@
     $PAGE->set_heading(format_string($course->fullname));
     $PAGE->set_context($context);
     $PAGE->requires->css('/mod/speedreading/styles.css');
-    $PAGE->requires->js('/mod/speedreading/javascript/sr.js',true);
 
+    // suggested to use the following on stackoverflow as part of using an 
+    // external javascript file:
+    // http://stackoverflow.com/questions/5915258/how-to-load-external-js-file-into-moodle
+    global $PAGE;
+    $PAGE->requires->js(new moodle_url($CFG->wwwroot . '/mod/speedreading/javascript/sr.js'), true );
 
-    // Mark viewed by user (if required)
-    //$completion = new completion_info($course);
-    //$completion->set_module_viewed($cm);
-    
-    //  $renderer = $PAGE->get_renderer('mod_choice');
-    //  echo $renderer->display_options($options, $cm->id, $choice->display);
-
-
-    //include 'srView1.php';
-    require('srView2.php');
-    $srv = new mod_speedreading_view2();
-    $html3 = $srv->setView("Henry V");
-
-
-
-    // other things you may want to set - remove if not needed
-    //$PAGE->set_cacheable(false);
-    //$PAGE->set_focuscontrol('some-html-id');
-    //$PAGE->add_body_class('speedreading-'.$somevar);
 
     // Output starts here
     echo $OUTPUT->header();
@@ -100,14 +90,16 @@
     //}
 
     // Replace the following lines with you own code
-    //echo $OUTPUT->heading('Yay! It works!');
-    echo $OUTPUT->heading($speedreading->name);
-    //echo $OUTPUT->heading($html3);
 
+    echo $OUTPUT->heading($speedreading->name);
 
     $renderer = $PAGE->get_renderer('mod_speedreading');
-    echo $renderer->display_preamble($speedreading->name, $sr_article->article);
-
+    echo $renderer->display_preamble($sr_article->id, $sr_article->article);
+    //echo $renderer->display_preamble($speedreading->name, $sr_article->article);
+    echo '<input type="button" onclick="showAlert();" value="Show alert box">';
+    echo '<input type="button" onclick="goToGoogle();" value="Google news">';
+    echo '<span id="clock">&nbsp;</span>';
+    echo  "<div class='greyButton' onclick='goBack();'> <p class ='buttonText'>Go Back</p>   </div> ";
 
 
 // if $completion (don't update, don't show activity) display results
@@ -142,10 +134,6 @@
         // 10 questions + answer choices
         // small clock
         // submit button
-
-
-
-
 
 
 

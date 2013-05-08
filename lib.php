@@ -42,6 +42,68 @@ function speedreading_supports($feature) {
  
  
  
+ 
+ 
+ 
+ /**
+ * @global object
+ * @param int $mytimetaken
+ * @param int $myscore
+ * @param object $speedreading
+ * @param object $sr_article
+ * @param int $userid
+ * @param object $course Course object
+ * @param object $cm
+ */
+ // function will be called after anwering comprehension questions and clicking on a 'submit' button
+function speedreading_user_submit_response($mytimetaken, $myscore, $speedreading, $sr_article, $userid, $course, $cm) {
+
+    global $DB, $CFG;
+    require_once($CFG->libdir.'/completionlib.php');
+
+
+   // get an object to represent the table already created (on viewing the article)
+   // to hold the student's responses
+   $current = $DB->get_record('sr_results', array('sr_id' => $speedreading->id, 'article_id' => $sr_article->id, 'userid' => $userid));
+   $newresponse = $current;
+   //$newresponse->userid = $userid;
+   $newresponse->timetaken = $mytimetaken;
+   $newresponse->score = $myscore;
+   $DB->update_record("sr_results", $newresponse);
+
+   // Update completion state
+   $completion = new completion_info($course);
+   if ($completion->is_enabled($cm) && $speedreading->completionsubmit) {
+       $completion->update_state($cm, COMPLETION_COMPLETE);
+   }
+   //add_to_log($course->id, "choice", "choose", "view.php?id=$cm->id", $speedreading->id, $cm->id);
+        
+}
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
 /**
  * Saves a new instance of the speedreading into the database
  *

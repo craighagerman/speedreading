@@ -52,23 +52,23 @@ function xmldb_speedreading_upgrade($oldversion) {
 
 
 
-    
 
+    if ($oldversion < 2012032101) {
 
-    if ($oldversion < 2012022512) {
+        // Define field viewedquestions to be added to sr_results
+        $table = new xmldb_table('sr_results');
+        $field = new xmldb_field('viewedquestions', XMLDB_TYPE_INTEGER, '2', null, null, null, '0', 'viewedarticle');
 
-        // Define field timetaken to be added to sr_article
-        $table = new xmldb_table('sr_article');
-        $field = new xmldb_field('timetaken', XMLDB_TYPE_INTEGER, '5', null, null, null, null, 'numberofwords');
-
-        // Conditionally launch add field timetaken
+        // Conditionally launch add field viewedquestions
         if (!$dbman->field_exists($table, $field)) {
             $dbman->add_field($table, $field);
         }
 
         // speedreading savepoint reached
-        upgrade_mod_savepoint(true, 2012022512, 'speedreading');
+        upgrade_mod_savepoint(true, 2012032101, 'speedreading');
     }
+
+
 
 
 

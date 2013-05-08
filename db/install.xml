@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<XMLDB PATH="mod/speedreading/db" VERSION="20130225" COMMENT="XMLDB file for Moodle mod/speedreading"
+<XMLDB PATH="mod/speedreading/db" VERSION="20130321" COMMENT="XMLDB file for Moodle mod/speedreading"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
 >
@@ -10,9 +10,7 @@
         <FIELD NAME="course" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" COMMENT="Course speedreading activity belongs to" PREVIOUS="id" NEXT="name"/>
         <FIELD NAME="name" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" COMMENT="name field for moodle instances" PREVIOUS="course" NEXT="intro"/>
         <FIELD NAME="intro" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="General introduction of the speedreading activity" PREVIOUS="name" NEXT="introformat"/>
-        <FIELD NAME="introformat" TYPE="int" LENGTH="4" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="Format of the intro field (MOODLE, HTML, MARKDOWN...)" PREVIOUS="intro" NEXT="timecreated"/>
-        <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" PREVIOUS="introformat" NEXT="timemodified"/>
-        <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false" PREVIOUS="timecreated"/>
+        <FIELD NAME="introformat" TYPE="int" LENGTH="4" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="Format of the intro field (MOODLE, HTML, MARKDOWN...)" PREVIOUS="intro"/>
       </FIELDS>
       <KEYS>
         <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
@@ -26,8 +24,7 @@
         <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true" NEXT="sr_id"/>
         <FIELD NAME="sr_id" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" PREVIOUS="id" NEXT="article"/>
         <FIELD NAME="article" TYPE="text" NOTNULL="true" SEQUENCE="false" COMMENT="~500 word article for speed reading" PREVIOUS="sr_id" NEXT="numberofwords"/>
-        <FIELD NAME="numberofwords" TYPE="int" LENGTH="5" NOTNULL="false" SEQUENCE="false" PREVIOUS="article" NEXT="timetaken"/>
-        <FIELD NAME="timetaken" TYPE="int" LENGTH="5" NOTNULL="false" SEQUENCE="false" PREVIOUS="numberofwords"/>
+        <FIELD NAME="numberofwords" TYPE="int" LENGTH="5" NOTNULL="false" SEQUENCE="false" PREVIOUS="article"/>
       </FIELDS>
       <KEYS>
         <KEY NAME="primary" TYPE="primary" FIELDS="id" NEXT="sr_id"/>
@@ -47,7 +44,7 @@
         <KEY NAME="article_id" TYPE="foreign" FIELDS="article_id" REFTABLE="sr_article" REFFIELDS="id" PREVIOUS="sr_id"/>
       </KEYS>
     </TABLE>
-    <TABLE NAME="sr_answers" COMMENT="Answer plus score for a given comprehension question for a speed reading article" PREVIOUS="sr_questions">
+    <TABLE NAME="sr_answers" COMMENT="Answer plus score for a given comprehension question for a speed reading article" PREVIOUS="sr_questions" NEXT="sr_results">
       <FIELDS>
         <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true" NEXT="sr_id"/>
         <FIELD NAME="sr_id" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" PREVIOUS="id" NEXT="article_id"/>
@@ -61,6 +58,24 @@
         <KEY NAME="sr_id" TYPE="foreign" FIELDS="sr_id" REFTABLE="sr_article" REFFIELDS="id" PREVIOUS="primary" NEXT="article_id"/>
         <KEY NAME="article_id" TYPE="foreign" FIELDS="article_id" REFTABLE="sr_article" REFFIELDS="id" PREVIOUS="sr_id" NEXT="question_id"/>
         <KEY NAME="question_id" TYPE="foreign" FIELDS="question_id" REFTABLE="sr_questions" REFFIELDS="id" PREVIOUS="article_id"/>
+      </KEYS>
+    </TABLE>
+    <TABLE NAME="sr_results" COMMENT="Student results for a given speed reading task." PREVIOUS="sr_answers">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true" NEXT="sr_id"/>
+        <FIELD NAME="sr_id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" COMMENT="foreign id in 'speedreading' table" PREVIOUS="id" NEXT="article_id"/>
+        <FIELD NAME="article_id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" PREVIOUS="sr_id" NEXT="userid"/>
+        <FIELD NAME="userid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" PREVIOUS="article_id" NEXT="datedone"/>
+        <FIELD NAME="datedone" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" PREVIOUS="userid" NEXT="viewedarticle"/>
+        <FIELD NAME="viewedarticle" TYPE="int" LENGTH="2" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="field to toggle when a student has started a speedreading assignment / viewed the reading. 0 = not viewed (default) 1+ = viewed" PREVIOUS="datedone" NEXT="viewedquestions"/>
+        <FIELD NAME="viewedquestions" TYPE="int" LENGTH="2" NOTNULL="false" DEFAULT="0" SEQUENCE="false" COMMENT="false (0) when questions have not yet been viewed. Change to true (1 or &amp;gt;1) after questions have been displayed" PREVIOUS="viewedarticle" NEXT="timetaken"/>
+        <FIELD NAME="timetaken" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" PREVIOUS="viewedquestions" NEXT="score"/>
+        <FIELD NAME="score" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" PREVIOUS="timetaken"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id" NEXT="sr_id"/>
+        <KEY NAME="sr_id" TYPE="foreign" FIELDS="sr_id" REFTABLE="speedreading" REFFIELDS="id" PREVIOUS="primary" NEXT="article_id"/>
+        <KEY NAME="article_id" TYPE="foreign" FIELDS="article_id" REFTABLE="sr_article" REFFIELDS="id" PREVIOUS="sr_id"/>
       </KEYS>
     </TABLE>
   </TABLES>

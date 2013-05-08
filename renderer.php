@@ -1,39 +1,9 @@
 <?php
 
-// This file is part of Moodle - http://moodle.org/
-//
-// Moodle is free software: you can redistribute it and/or modify
-// it under the terms of the GNU General Public License as published by
-// the Free Software Foundation, either version 3 of the License, or
-// (at your option) any later version.
-//
-// Moodle is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
-//
-// You should have received a copy of the GNU General Public License
-// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
-
-    /**
-     * Moodle renderer used to display special elements of the lesson module
-     *
-     * You can have a rather longer description of the file as well,
-     * if you like, and it can span multiple lines.
-     *
-     * @package    mod
-     * @subpackage speedreading
-     * @copyright  2011 Craig Hagerman
-     * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
-     */
-
-
-
-
 
 class mod_speedreading_renderer extends plugin_renderer_base {
 
-
+   
 
 
     /**
@@ -43,29 +13,68 @@ class mod_speedreading_renderer extends plugin_renderer_base {
     * @param object
     * @return string (html code)
     **/
-    public function display_preamble($title, $article) {
-        $html = "<h2>Instructions:</h2><br>";
-        $html .= "<p>This is a test of your reading speed. When you are ready click on the Start button below. You will then see a short article of about 500 words. Try to read the article quickly but smoothly. As soon as you finish click on the Continue button. YOu will then be given 10 multiple-choice comprehension questions on the article. You may not go back to the article. You should answer based on your understanding and memory of the article.</p>";
-        $html .= "<h3>Note</h3><br>";
-        $html .= "<ul>
+    public function display_preamble1($article_id, $article) {
+      $html = '';
+      $html .= "<div id='contentblock'><h2>Instructions:</h2><br>";
+      $html .= "<p>This is a test of your reading speed. When you are ready click on the Start button below. You will then see a short article of about 500 words. Try to read the article quickly but smoothly. As soon as you finish click on the Continue button. YOu will then be given 10 multiple-choice comprehension questions on the article. You may not go back to the article. You should answer based on your understanding and memory of the article.</p>";
+      $html .= "<h3>Note</h3><br>";
+      $html .= "<ul>
                       <li>The following pages have time limits. This is a test of reading speed so you are not allowed to keep either the article or question page open for a long time. After ~5 minutes the page will automatically close.</li>
                       <li>You are only allowed one attempt. If you close either the article or question page you will not be allowed to restart again. Once you begin you must finish.</li>
                       <li>The whole activity should take less than 15 minutes.</li>
                       <li>You should aim to read the article in about 3 minutes and complete the questions in about 12 minutes.</li>
-                  </ul>";
-        $html .= "<div class='greyButton' onclick='history.back()'> <p class ='buttonText'>Cancel</p>   </div>";
-        $html .= 
-            <<<EOD
-            <div class='greenButton' onclick="expandOverlay('
-EOD;
-        $html .= $title;
-        $html .= 
-            <<<EOD
-            ')"> <p class ='buttonText'>Start</p>    </div>
-EOD;
+                  </ul> ";
+      $html .= '</div>';
+      $html .= "<button type='button' class='g-button green' id='start' onclick=\"expandOverlay(' " . $article_id . "')\">Start Reading</button>";
+      $html .= "<button type='button' class='g-button red' id='stop' onclick=\"getFinishTime()\">Stop Reading</button>";
+     
 
-        return $html;
+      return $html;
     }
+
+
+
+    public function display_preamble2($article_id, $article) {
+      $html = '<div id="srmain" > <div id="srleft" class = "srcols"></div> <div id="srcontentblock" class = "srcols">';
+      $html .= "<h2>Instructions:</h2><br>";
+      $html .= '<p id = "srtext">This is 3 a test of your reading speed. When you are ready click on the Start button below. You will then see a short article of about 500 words. Try to read the article quickly but smoothly. As soon as you finish click on the Continue button. YOu will then be given 10 multiple-choice comprehension questions on the article. You may not go back to the article. You should answer based on your understanding and memory of the article.</p>';
+      $html .= "<h3>Note</h3><br>";
+      $html .= "<ul>
+                      <li>The following pages have time limits. This is a test of reading speed so you are not allowed to keep either the article or question page open for a long time. After ~5 minutes the page will automatically close.</li>
+                      <li>You are only allowed one attempt. If you close either the article or question page you will not be allowed to restart again. Once you begin you must finish.</li>
+                      <li>The whole activity should take less than 15 minutes.</li>
+                      <li>You should aim to read the article in about 3 minutes and complete the questions in about 12 minutes.</li>
+                  </ul> ";
+      $html .= '</div>';
+      $html .= '<div id="srright" class = "srcols"></div> </div>';
+      $html .= "<button type='button' class='g-button green' id='start' onclick=\"expandOverlay(' " . $article_id . "')\">Start Reading</button>";
+      $html .= "<button type='button' class='g-button red' id='stop' onclick=\"getFinishTime()\">Stop Reading</button>";
+
+      return $html;
+    }
+
+
+    public function display_preamble($article_id, $article) {
+      $html = '<div id="srcontentblock"   style="left:50px; width: 600px; font-family:Georgia, Times, serif; font-size:16px; line-height:25px;" >';
+      $html .= "<h2>Instructions:</h2><br>";
+      $html .= '<p id = "srtext">This is a test of your reading speed. When you are ready click on the Start button below. You will then see a short article of about 500 words. Try to read the article quickly but smoothly. As soon as you finish click on the Continue button. You will then be given 10 multiple-choice comprehension questions on the article. You may not go back to the article. You should answer based on your understanding and memory of the article.</p>';
+      $html .= "<h3>Note</h3><br>";
+      $html .= "<ul>
+                      <li>The following pages have time limits. This is a test of reading speed so you are not allowed to keep either the article or question page open for a long time. After ~5 minutes the page will automatically close.</li>
+                      <li>You are only allowed one attempt. If you close either the article or question page you will not be allowed to restart again. Once you begin you must finish.</li>
+                      <li>The whole activity should take less than 15 minutes.</li>
+                      <li>You should aim to read the article in about 3 minutes and complete the questions in about 12 minutes.</li>
+                  </ul> ";
+      $html .= '</div>';
+      $html .= "<button type='button' class='g-button green' id='start' onclick=\"expandOverlay(' " . $article_id . "')\">Start Reading</button>";
+      $html .= "<button type='button' class='g-button red' id='stop' onclick=\"getFinishTime()\">Stop Reading</button>";
+
+      return $html;
+    }
+
+
+
+
 
 
     /**
@@ -73,7 +82,7 @@ EOD;
     *  @param object 
     *  @return string (html code)   
     **/
-    public function display_article($title, $article) {
+    public function display_article() {
         $html =
             <<<EOD
             <div class = "overlay">
@@ -112,11 +121,39 @@ EOD;
     *  @param object
     *  @return string (html code)
     **/
-    public function display_questions() {
-        $html ='';
-        $html .= "<p>display_questions()</p>";
-        return $html;
+
+    public function display_questions($id, $sr_questions) {
+      global $DB;
+      global $PAGE;
+      $url = new moodle_url($PAGE->url);
+      $html = '<div>';
+      $html .= ' <form name="input" action=' . $url . 'method="POST">';
+      $html .= '<input type="hidden" name="id" value="' . $id . '">';
+      $html .= '<OL>';
+      // print a question from the database
+      foreach($sr_questions as $ques){
+         $html .= '<p><LI>' . $ques->question . '</p>';
+         $html .= '<UL><OL TYPE="a">';     
+         // get answers corresponding to the current question             
+         $sr_answers = $DB->get_records('sr_answers', array('question_id' => $ques->id));
+         // print the answers from above
+         foreach($sr_answers as $ans) {
+            // use the answer's score (0 or 1) as it's value setting. Then on POST, simply convert each to int and sum.
+            $name = 'ques' . $ques->id;
+            $value = $ans->score;
+            $html .=  '<LI><input type="radio" name="' . $name . '" value="' . $value  . '">   ' . $ans->answer . '<br>';
+
+         }
+         $html .= '</OL></UL><HR>';
+      }
+      $html .= '</OL>';  
+      $html .= "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+      $html .= '<input type="submit" class="g-button green" name="submit" value="Submit">';      
+      $html .= ' </form>';
+      $html .= '</div>';  
+      return $html;
     }
+
 
 
     /**
@@ -127,13 +164,13 @@ EOD;
     public function display_results($time_taken, $correctanswers) {
         global $PAGE;
         $html ='';
-        $html .= "<p>display_results()</p>";
+        $html .= "<H2>Results</H2>";
+        
+        $html .= 'Time: ' . $time_taken . '<br>';
+        $html .= 'Score: ' . $correctanswers . '/10 <br>';
+        
         return $html;
     }
     
     
-    
-    
-
 }
-

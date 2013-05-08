@@ -1,0 +1,187 @@
+
+#outer {
+  width: 100%; height: 100%;
+}
+
+
+p.buttonText { 
+    position: relative;
+    width: 100%;
+    text-align: center;
+    color: #333;
+    font-size: 20px;
+    font-family:Arial, sanserif;
+    line-height: 50px;
+}
+
+p.buttonText:hover {
+    color:white;
+}
+
+
+.greenButton {
+   background-color: #58FA82;
+   width:100px; height:50px;
+   float:left;
+   margin:15px;
+}
+.greenButton:hover {
+    background-color:#088A08;
+}
+
+.greyButton {
+   background-color: #AAA;
+   width:100px; height:50px;
+   float:left;
+   margin:15px;
+}
+.greyButton:hover {
+    background-color:#333;
+}
+
+
+
+.redButton {
+   background-color: #AAA;
+   width:100px; height:50px;
+   float:left;
+   margin:15px;
+   z-index: 15;
+}
+.redButton:hover {
+    background-color:#333;
+}
+
+
+
+
+#text2 {
+   position: relative;
+   top: 10px;
+   width: 100%;
+   text-align: center;
+   color: #333;
+   font-size: 20px;
+   font-family:Arial, sanserif;
+   line-height: 50px;
+   z-index: 15;
+}
+
+.text2 {
+   position: relative;
+   top: 10px;
+   width: 100%;
+   text-align: center;
+   color: #333;
+   font-size: 20px;
+   font-family:Arial, sanserif;
+   line-height: 50px;
+   z-index: 15;
+}
+
+
+
+
+
+
+
+#main {
+  display:table;
+  width:100%
+}
+
+div {
+  display: table-cell;
+  background-color:#FEFEFE;
+}
+
+#leftblock {
+  top: 0px;
+  left: 0px;
+  margin: 0px;
+  padding: 10px;
+  border: 1px;
+}
+
+#contentblock {
+  padding: 10px;
+  width: 600px;
+  font-family:Georgia, Times, serif;
+  font-size:16px;
+  line-height:25px;
+  z-index:12;
+  background-color:#0AF;
+  border: 1px;
+}
+
+#rightblock {
+  top: 0px;
+  right: 0px;
+  margin: 0px;
+  padding: 10px;
+  border: 1px;
+}
+
+
+
+
+
+
+
+
+
+#divbutton {
+   background-color: #58FA82;
+   width:100px; height:50px; 
+   z-index: 15;
+}
+
+#divbutton:hover {
+    background-color:#088A08;
+}
+
+
+.bigButton {
+   background-color: #58FA82;
+   width:100px; height:50px; 
+}
+
+.bigButton:hover {
+    background-color:#088A08;
+}
+
+
+
+p {
+text-align: left;
+}
+
+.overlay {
+   background-color: #FFF;
+   opacity: 1;
+   position: fixed; top: 0; left: 0;
+   width: 100%; height: 100%;
+   z-index: 10;
+}
+
+
+.overlayheader {
+  font-size:24px;
+  position: absolute;
+  z-index: 11;
+  left: 200px;
+  top: 40px;
+}
+
+
+
+.overlaytext {
+  font-size:18px;
+  position: absolute;
+  z-index: 11;
+  right: 200px;
+  left: 200px;
+  top: 150px;
+}
+
+

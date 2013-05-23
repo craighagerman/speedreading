@@ -18,7 +18,7 @@
 defined('MOODLE_INTERNAL') || die();
 
 /** example constant */
-//define('NEWMODULE_ULTIMATE_ANSWER', 42);
+//define('widget_ULTIMATE_ANSWER', 42);
 
 ////////////////////////////////////////////////////////////////////////////////
 // Moodle core API                                                            //

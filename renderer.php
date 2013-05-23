@@ -13,6 +13,7 @@ class mod_speedreading_renderer extends plugin_renderer_base {
     * @param object
     * @return string (html code)
     **/
+    /*
     public function display_preamble1($article_id, $article) {
       $html = '';
       $html .= "<div id='contentblock'><h2>Instructions:</h2><br>";
@@ -31,9 +32,9 @@ class mod_speedreading_renderer extends plugin_renderer_base {
 
       return $html;
     }
+   */
 
-
-
+   /*
     public function display_preamble2($article_id, $article) {
       $html = '<div id="srmain" > <div id="srleft" class = "srcols"></div> <div id="srcontentblock" class = "srcols">';
       $html .= "<h2>Instructions:</h2><br>";
@@ -52,22 +53,32 @@ class mod_speedreading_renderer extends plugin_renderer_base {
 
       return $html;
     }
+    */
 
 
     public function display_preamble($article_id, $article) {
-      $html = '<div id="srcontentblock"   style="left:50px; width: 600px; font-family:Georgia, Times, serif; font-size:16px; line-height:25px;" >';
-      $html .= "<h2>Instructions:</h2><br>";
-      $html .= '<p id = "srtext">This is a test of your reading speed. When you are ready click on the Start button below. You will then see a short article of about 500 words. Try to read the article quickly but smoothly. As soon as you finish click on the Continue button. You will then be given 10 multiple-choice comprehension questions on the article. You may not go back to the article. You should answer based on your understanding and memory of the article.</p>';
-      $html .= "<h3>Note</h3><br>";
-      $html .= "<ul>
-                      <li>The following pages have time limits. This is a test of reading speed so you are not allowed to keep either the article or question page open for a long time. After ~5 minutes the page will automatically close.</li>
-                      <li>You are only allowed one attempt. If you close either the article or question page you will not be allowed to restart again. Once you begin you must finish.</li>
-                      <li>The whole activity should take less than 15 minutes.</li>
-                      <li>You should aim to read the article in about 3 minutes and complete the questions in about 12 minutes.</li>
-                  </ul> ";
-      $html .= '</div>';
-      $html .= "<button type='button' class='g-button green' id='start' onclick=\"expandOverlay(' " . $article_id . "')\">Start Reading</button>";
-      $html .= "<button type='button' class='g-button red' id='stop' onclick=\"getFinishTime()\">Stop Reading</button>";
+      $html =  html_writer::start_tag('div', array('id' => 'srcontentblock', 
+                                                    'style' => 'left:50px; width: 600px; font-family:Georgia, Times, serif; font-size:16px; line-height:25px;'));
+      $html .= html_writer::tag('h2', 'Instructions:');
+      $html .= html_writer::tag('p', 'This is a test of your reading speed. When you are ready click on the Start button below. You will then see a short article of about 500 words. Try to read the article quickly but smoothly. As soon as you finish click on the Continue button. You will then be given 10 multiple-choice comprehension questions on the article. You may not go back to the article. You should answer based on your understanding and memory of the article.', array('id' => 'srtext'));
+      $html .= html_writer::tag('h3', 'Note');
+      $items = array(
+               'The following pages have time limits. This is a test of reading speed so you are not allowed to keep either the article or question page open for a long time. After ~5 minutes the page will automatically close.',
+               'You are only allowed one attempt. If you close either the article or question page you will not be allowed to restart again. Once you begin you must finish.',
+               'The whole activity should take less than 15 minutes.',
+               'You should aim to read the article in about 3 minutes and complete the questions in about 12 minutes.'
+                     );
+      $html .= html_writer::alist($items);
+
+      $html .= html_writer::end_tag('div');
+      $html .= html_writer::tag('button', 'Start reading', array(  'type' => 'button', 
+                                                                  'class' => 'g-button green', 
+                                                                     'id' => 'start',
+                                                                'onclick' => '\"expandOverlay(' . $article_id . ')\"'));
+      $html .= html_writer::tag('button', 'Stop reading', array(  'type' => 'button', 
+                                                                  'class' => 'g-button red', 
+                                                                     'id' => 'stop',
+                                                                'onclick' => '\"getFinishTime()\"'));
 
       return $html;
     }

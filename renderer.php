@@ -3,9 +3,6 @@
 
 class mod_speedreading_renderer extends plugin_renderer_base {
 
-   
-
-
     /**
     *   Returns HTML to display instructions and warn students that once they 
     *   have only one attempt, should take as much time as possible and 
@@ -14,7 +11,7 @@ class mod_speedreading_renderer extends plugin_renderer_base {
     * @return string (html code)
     **/
   
-    public function display_preamble($article_id, $article) {
+    public function display_article($article_id, $article) {
       $html =  html_writer::start_tag('div', array('id' => 'srcontentblock', 
                                                     'style' => 'left:50px; width: 600px; font-family:Georgia, Times, serif; font-size:16px; line-height:25px;'));
       $html .= html_writer::tag('h2', 'Instructions:');
@@ -27,64 +24,23 @@ class mod_speedreading_renderer extends plugin_renderer_base {
                'You should aim to read the article in about 3 minutes and complete the questions in about 12 minutes.'
                      );
       $html .= html_writer::alist($items);
-
       $html .= html_writer::end_tag('div');
       $html .= html_writer::tag('button', 'Start reading', array(  'type' => 'button', 
                                                                   'class' => 'g-button green', 
-                                                                     'id' => 'start',
-                                                                'onclick' => '\"expandOverlay(' . $article_id . ')\"'));
+                                                                     'id' => 'start',                                                               
+                                                                'onclick' => 'expandOverlay(' . $article_id . ')'
+                                                                ));
       $html .= html_writer::tag('button', 'Stop reading', array(  'type' => 'button', 
                                                                   'class' => 'g-button red', 
                                                                      'id' => 'stop',
-                                                                'onclick' => '\"getFinishTime()\"'));
-
+                                                                'onclick' => 'getFinishTime()'
+                                                                ));
       return $html;
     }
 
 
 
-
-
-
-    /**
-    *   Returns HTML to display the speed reading article in a distraction-free overlay
-    *  @param object 
-    *  @return string (html code)   
-    **/
-    public function display_article() {
-        $html =
-            <<<EOD
-            <div class = "overlay">
-                <div id="main">
-
-                <div id="leftblock"></div>
-
-                <div id="middleblock">
-
-                    <h1> $title </h1>
-                    <p>
-                    For he to-day that sheds his blood with me 
-                    Shall be my brother; be he ne'er so vile, 
-                    This day shall gentle his condition; 
-                    And gentlemen in England now-a-bed 
-                    Shall think themselves accurs'd they were not here, 
-                    And hold their manhoods cheap whiles any speaks 
-                    That fought with us upon Saint Crispin's day.
-                    </p>
-                        <div class="bigButton" onclick="expandOverlay()">
-                            <p class ="buttonText">Page 2</p>
-                        </div>        
-                    </div>
  
-                    <div id="rightblock"></div>
-                </div>
-            </div>
-    
-EOD;
-        return $html;
-    }
-
-
     /**
     *   Returns HTML to display 10 comphrension questions + four multiple choice answers
     *  @param object
@@ -95,6 +51,32 @@ EOD;
       global $DB;
       global $PAGE;
       $url = new moodle_url($PAGE->url);
+      
+      /*
+      $html =  html_writer::start_tag('div');
+          $html .= html_writer::tag('form', '', array(  name => 'input', 
+                                                      action => $url,
+                                                      method => 'POST'
+                                                      ));
+         $html .= html_writer::tag('input', '', array( type => 'hidden',
+                                                      name =>'id',
+                                                      value => $id
+                                                      ));
+         $questions = 
+         $html .= html_writer::alist($questions, $tag = 'ol');
+            $sr_answers = $DB->get_records('sr_answers', array('question_id' => $ques->id));
+            foreach($sr_answers as $ans) {
+            // use the answer's score (0 or 1) as it's value setting. Then on POST, simply convert each to int and sum.
+            $name = 'ques' . $ques->id;
+            $value = $ans->score;
+            $answers = 
+            $html .= html_writer::alist($answers, $tag = 'ol');
+            
+      $html .= html_writer::end_tag('div');
+      */
+      
+      
+      
       $html = '<div>';
       $html .= ' <form name="input" action=' . $url . 'method="POST">';
       $html .= '<input type="hidden" name="id" value="' . $id . '">';

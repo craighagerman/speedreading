@@ -80,7 +80,7 @@
 
    // Display preamble -> (button click) -> speed reading article
    if (!$current ) {
-      echo $renderer->display_preamble($sr_article->id, $sr_article->article);
+      echo $renderer->display_article($sr_article->id, $sr_article->article);
 
    }
    

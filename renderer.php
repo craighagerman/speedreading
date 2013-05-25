@@ -52,31 +52,52 @@ class mod_speedreading_renderer extends plugin_renderer_base {
       global $PAGE;
       $url = new moodle_url($PAGE->url);
       
-      /*
+      
       $html =  html_writer::start_tag('div');
-          $html .= html_writer::tag('form', '', array(  name => 'input', 
-                                                      action => $url,
-                                                      method => 'POST'
-                                                      ));
-         $html .= html_writer::tag('input', '', array( type => 'hidden',
-                                                      name =>'id',
-                                                      value => $id
-                                                      ));
-         $questions = 
-         $html .= html_writer::alist($questions, $tag = 'ol');
-            $sr_answers = $DB->get_records('sr_answers', array('question_id' => $ques->id));
-            foreach($sr_answers as $ans) {
-            // use the answer's score (0 or 1) as it's value setting. Then on POST, simply convert each to int and sum.
-            $name = 'ques' . $ques->id;
-            $value = $ans->score;
-            $answers = 
-            $html .= html_writer::alist($answers, $tag = 'ol');
-            
+          $html .= html_writer::start_tag('form', array(  'name' => 'input', 
+                                                        'action' => $url,
+                                                        'method' => 'POST' ));
+         $html .= html_writer::tag('input', '', array( 'type' => 'hidden',
+                                                       'name' =>'id',
+                                                      'value' => $id ));
+
+         $html .= html_writer::start_tag('ol');
+            // print a question from the database
+            foreach($sr_questions as $ques){
+               $html .= html_writer::tag('li', $ques->question);
+               
+               $html .= html_writer::start_tag('ul');
+               $html .= html_writer::start_tag('ol');
+               $sr_answers = $DB->get_records('sr_answers', array('question_id' => $ques->id));
+               foreach($sr_answers as $ans) {
+               // use the answer's score (0 or 1) as it's value setting. Then on POST, simply convert each to int and sum.
+                  $name = 'ques' . $ques->id;
+                  $value = $ans->score;
+                  $html .= html_writer::tag('li', '');
+                     $html .= html_writer::tag('input', $ans->answer, array( 'type' => 'radio',
+                                                                             'name' => $name,
+                                                                            'value' => $value ));
+               }
+               $html .= html_writer::end_tag('ol');
+               $html .= html_writer::end_tag('ul');
+               $html .= html_writer::tag('hr');
+            }
+         $html .= html_writer::end_tag('ol');
+         $html .= "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+         $html .= html_writer::tag('input', $ans->answer, array( 'type' => 'submit',
+                                                                  'name' => 'submit',
+                                                                 'class' => 'g-button green',
+                                                                 'value' => 'Submit' ));
+      $html .= html_writer::end_tag('form');   
       $html .= html_writer::end_tag('div');
-      */
+      
+      return $html;
       
       
+      ///////////////
       
+      
+      /*
       $html = '<div>';
       $html .= ' <form name="input" action=' . $url . 'method="POST">';
       $html .= '<input type="hidden" name="id" value="' . $id . '">';
@@ -103,6 +124,7 @@ class mod_speedreading_renderer extends plugin_renderer_base {
       $html .= ' </form>';
       $html .= '</div>';  
       return $html;
+      */
     }
 
 

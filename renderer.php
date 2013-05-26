@@ -90,41 +90,7 @@ class mod_speedreading_renderer extends plugin_renderer_base {
                                                                  'value' => 'Submit' ));
       $html .= html_writer::end_tag('form');   
       $html .= html_writer::end_tag('div');
-      
       return $html;
-      
-      
-      ///////////////
-      
-      
-      /*
-      $html = '<div>';
-      $html .= ' <form name="input" action=' . $url . 'method="POST">';
-      $html .= '<input type="hidden" name="id" value="' . $id . '">';
-      $html .= '<OL>';
-      // print a question from the database
-      foreach($sr_questions as $ques){
-         $html .= '<p><LI>' . $ques->question . '</p>';
-         $html .= '<UL><OL TYPE="a">';     
-         // get answers corresponding to the current question             
-         $sr_answers = $DB->get_records('sr_answers', array('question_id' => $ques->id));
-         // print the answers from above
-         foreach($sr_answers as $ans) {
-            // use the answer's score (0 or 1) as it's value setting. Then on POST, simply convert each to int and sum.
-            $name = 'ques' . $ques->id;
-            $value = $ans->score;
-            $html .=  '<LI><input type="radio" name="' . $name . '" value="' . $value  . '">   ' . $ans->answer . '<br>';
-
-         }
-         $html .= '</OL></UL><HR>';
-      }
-      $html .= '</OL>';  
-      $html .= "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
-      $html .= '<input type="submit" class="g-button green" name="submit" value="Submit">';      
-      $html .= ' </form>';
-      $html .= '</div>';  
-      return $html;
-      */
     }
 
 
@@ -136,12 +102,12 @@ class mod_speedreading_renderer extends plugin_renderer_base {
      */
     public function display_results($time_taken, $correctanswers) {
         global $PAGE;
-        $html ='';
-        $html .= "<H2>Results</H2>";
         
-        $html .= 'Time: ' . $time_taken . '<br>';
-        $html .= 'Score: ' . $correctanswers . '/10 <br>';
-        
+        $html = html_writer::tag('H2', 'Results');
+        $tt = 'Time: ' . $time_taken . '<br>';
+        $html .= html_writer::tag('P', $tt);
+        $scr = 'Score: ' . $correctanswers . '/10 <br>';
+        $html .= html_writer::tag('P', $scr);
         return $html;
     }
     

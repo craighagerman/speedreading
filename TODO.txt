@@ -1,11 +1,6 @@
 
-add a 'Stop' button to the article overlay
-add an unobtrusive clock to the article overlay
 
-create answers page onclick from article overlay (load new page)
-    10 questions
-    4 answers each
-    submit button
+add a clock to the article overlay
 
 create a 'results' page to display after submitting OR on subsequent view
    reading speed

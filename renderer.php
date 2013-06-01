@@ -80,7 +80,7 @@ class mod_speedreading_renderer extends plugin_renderer_base {
                }
                $html .= html_writer::end_tag('ol');
                $html .= html_writer::end_tag('ul');
-               $html .= html_writer::tag('hr');
+               $html .= html_writer::tag('hr', '');
             }
          $html .= html_writer::end_tag('ol');
          $html .= "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";

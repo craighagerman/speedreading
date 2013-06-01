@@ -32,7 +32,19 @@ defined('MOODLE_INTERNAL') || die();
 
 $string['modulename'] = 'speedreading';
 $string['modulenameplural'] = 'speedreadings';
-$string['modulename_help'] = 'Use the speedreading module for... | The speedreading module allows...';
+
+$string['modulename_help'] = 'The speedreading module allows a teacher to set a short article as a timed reading assignment to measure and track a student\'s reading speed. 1o comphrension questions follow the reading to ensure that students have a suffient understanding of the text and are not just skimming and clicking submit without understanding.
+
+Texts should be around 500 words long and written within the 1000 or 2000 word frequency level. (ie. using only words within the 1000/2000 most frequently used words in English.) The point of this activity is to improve reading fluency, not reading for accuracy, guessing meaning from context, etc. 
+
+For more information on the practice and benefits of speedreading as a fluency thread within an ESL / EFL class please read Paul Nation\'s writings on the topic. See his web page here:
+http://www.victoria.ac.nz/lals/about/staff/paul-nation
+
+Sample readings could be obtained here:
+https://www.victoria.ac.nz/lals/.../paul-nation/Speed-reading-whole.pdf‎
+';
+
+
 $string['speedreadingfieldset'] = 'Custom example fieldset';
 $string['speedreadingname'] = 'speedreading name';
 $string['speedreadingname_help'] = 'This is the content of the help tooltip associated with the speedreadingname field. Markdown syntax is supported.';

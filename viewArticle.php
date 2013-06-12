@@ -43,11 +43,6 @@
 
    $arr = array('title' => $current_title, 'article' => $current_article, 'courseid' => $cm);
 
-   // version 2 return
    echo json_encode($arr);
-
-
-   // version 1 return
-   //echo $sr_article->article;
    
 ?>

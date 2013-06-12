@@ -1,7 +1,5 @@
 
 
-add a clock to the article overlay
-
 create a 'results' page to display after submitting OR on subsequent view
    reading speed
    answers correct

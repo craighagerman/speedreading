@@ -66,7 +66,6 @@ function speedreading_user_submit_response($mytimetaken, $myscore, $speedreading
    // to hold the student's responses
    $current = $DB->get_record('sr_results', array('sr_id' => $speedreading->id, 'article_id' => $sr_article->id, 'userid' => $userid));
    $newresponse = $current;
-   //$newresponse->userid = $userid;
    $newresponse->timetaken = $mytimetaken;
    $newresponse->score = $myscore;
    $DB->update_record("sr_results", $newresponse);
@@ -76,7 +75,6 @@ function speedreading_user_submit_response($mytimetaken, $myscore, $speedreading
    if ($completion->is_enabled($cm) && $speedreading->completionsubmit) {
        $completion->update_state($cm, COMPLETION_COMPLETE);
    }
-   //add_to_log($course->id, "choice", "choose", "view.php?id=$cm->id", $speedreading->id, $cm->id);
         
 }
  
